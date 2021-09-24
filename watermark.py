@@ -20,6 +20,9 @@ logo = Image.open(lgo)
 logoWidth = logo.width
 logoHeight = logo.height
 
+# Set small gap around 10% of the logo size between the logo and the edge
+gapWidth = int(logoWidth / 10)
+gapHeight = int(logoHeight / 10)
 
 for filename in os.listdir(path):
     if any([filename.lower().endswith(ext) for ext in EXTS]) and filename != lgo:
@@ -31,11 +34,11 @@ for filename in os.listdir(path):
             if pos == 'topleft':
                 image.paste(logo, (0, 0), logo)
             elif pos == 'topright':
-                image.paste(logo, (imageWidth - logoWidth, 0), logo)
+                image.paste(logo, (imageWidth - logoWidth - gapWidth, gapHeight), logo)
             elif pos == 'bottomleft':
-                image.paste(logo, (0, imageHeight - logoHeight), logo)
+                image.paste(logo, (gapWidth, imageHeight - logoHeight - gapHeight), logo)
             elif pos == 'bottomright':
-                image.paste(logo, (imageWidth - logoWidth, imageHeight - logoHeight), logo)
+                image.paste(logo, (imageWidth - logoWidth - gapWidth, imageHeight - logoHeight - gapHeight), logo)
             elif pos == 'center':
                 image.paste(logo, ((imageWidth - logoWidth)/2, (imageHeight - logoHeight)/2), logo)
             else:
