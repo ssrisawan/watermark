@@ -30,6 +30,22 @@ for filename in os.listdir(path):
         imageWidth = image.width
         imageHeight = image.height
 
+        # Get the image orientation from EXIF (Tag 274)
+        # 1: 0 degrees
+        # 6: rotate 90 degrees
+        # 3: rotate 180 degrees
+        # 8: rotate 270 degrees
+        orientation = image.getexif().get(274)
+
+        # Transpose the image if width is greater than height while the orientation is either 6 or 8
+        if (imageWidth > imageHeight):
+            if (orientation == 6):
+                image = image.transpose(Image.ROTATE_270)
+                imageWidth, imageHeight = imageHeight, imageWidth
+            if (orientation == 8):
+                image = image.transpose(Image.ROTATE_90)
+                imageWidth, imageHeight = imageHeight, imageWidth
+
         try:
             if pos == 'topleft':
                 image.paste(logo, (0, 0), logo)
